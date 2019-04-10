@@ -49,6 +49,7 @@ RUN pip3 install cupy-cuda100
 RUN pip3 install tensorflow-gpu
 RUN pip3 install jupyter
 RUN pip3 install jupyterlab
+RUN pip3 install opencv-python 
 
 ##########################
 
