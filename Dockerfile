@@ -77,5 +77,6 @@ RUN python3 install.py
 
 
 RUN mkdir -p $NOTEBOOK_HOME 
-CMD ["sh", "-c", "jupyter notebook --allow-root > $NOTEBOOK_HOME/log.txt 2>&1"]
+#CMD ["sh", "-c", "jupyter notebook --allow-root > $NOTEBOOK_HOME/log.txt 2>&1"]
+CMD ["sh", "-c", "jupyter lab --allow-root > $NOTEBOOK_HOME/log.txt 2>&1"]
 #CMD ["sh", "-c", "/bin/bash"]
