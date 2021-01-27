@@ -1,6 +1,6 @@
-FROM nvidia/cuda:10.0-cudnn7-runtime-ubuntu16.04
+FROM nvidia/cuda:10.0-cudnn7-devel-ubuntu18.04
 
-MAINTAINER chenaoki <chenaoki@gmail.com>
+MAINTAINER kokifurukawa <furukawa-koki795@g.ecc.u-tokyo.ac.jp>
 
 RUN apt-get update && apt-get install -y \
                    build-essential \
@@ -30,10 +30,11 @@ RUN apt-get update && apt-get install -y \
                    cuda-curand-10-0 \
                    cuda-cusolver-10-0 \
                    cuda-cusparse-10-0 \
+		   xvfb \
                    && apt-get clean && rm -rf /var/lib/apt/lists/*
 
-RUN apt-get update && apt-get install nvinfer-runtime-trt-repo-ubuntu1604-5.0.2-ga-cuda10.0 
-RUN apt-get update && apt-get install libnvinfer5=5.1.2-1+cuda10.0 
+RUN apt-get update && apt-get install nvinfer-runtime-trt-repo-ubuntu1804-5.0.2-ga-cuda10.0
+RUN apt-get update && apt-get install libnvinfer5=5.0.2-1+cuda10.0 
 RUN apt-get update && apt-get install -y python3 python3-pip
 
 USER root
@@ -53,6 +54,8 @@ RUN pip3 install opencv-python
 RUN pip3 install matplotlib 
 RUN pip3 install keras
 RUN pip3 install pandas
+RUN pip3 install open3d
+RUN pip3 install pyvista
 
 ##########################
 
@@ -79,6 +82,6 @@ RUN python3 install.py
 
 
 RUN mkdir -p $NOTEBOOK_HOME 
-#CMD ["sh", "-c", "jupyter notebook --allow-root > $NOTEBOOK_HOME/log.txt 2>&1"]
-CMD ["sh", "-c", "jupyter lab --allow-root > $NOTEBOOK_HOME/log.txt 2>&1"]
-#CMD ["sh", "-c", "/bin/bash"]
+# Since open3d requires a display, xvfg is used to create a virtual display framebuffer.
+CMD ["sh", "-c", "xvfb-run -a -s '-screen 0 1920x1080x24' jupyter lab --allow-root > $NOTEBOOK_HOME/log.txt 2>&1"]
+

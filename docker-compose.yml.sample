@@ -1,11 +1,11 @@
 version: '2.3'
 services:
-  elecpy:
+  RENAME_ME:
     runtime: nvidia
     build:
       context: ./
-    image: chenaoki/nb_basic 
-    container_name: chenaoki_nb_basic
+    image: furuko/nb_basic 
+    container_name: furuko_nb_basic
     ports:
       - "5438:8888"
     volumes:
